@@ -6,8 +6,6 @@ require "digest"
 
 module JekyllWKD
   class KeyFile < ::Jekyll::StaticFile
-    PGP_PATH = ".well-known/openpgpkey"
-
     def initialize site, base, dir, name, fpr
       @fpr = fpr
       super site, base, dir, name
@@ -37,10 +35,12 @@ module JekyllWKD
       @domain ||= pgpkey.email.split("@").last
     end
 
+    def username
+      @username || pgpkey.email.split("@").first
+    end
+
     def hash
-      @hash ||= ZBase32.encode(
-        Digest::SHA1.digest(pgpkey.email.split("@").first)
-      )
+      @hash ||= ZBase32.encode Digest::SHA1.digest username
     end
 
     private
