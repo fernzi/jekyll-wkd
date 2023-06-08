@@ -1,14 +1,26 @@
-name: Ruby
+name: Continuous Integration
 
 on:
   push:
     branches:
       - master
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE*'
+      - '.gitignore'
+      - '.editorconfig'
 
   pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE*'
+      - '.gitignore'
+      - '.editorconfig'
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     name: Ruby ${{ matrix.ruby }}
     strategy:
@@ -24,5 +36,7 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
-    - name: Run the default task
-      run: bundle exec rake
+    - name: Run Standard
+      run: bundle exec rake standard
+    - name: Run Tests
+      run: bundle exec rake test
