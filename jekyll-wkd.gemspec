@@ -19,4 +19,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "jekyll", ">= 3.0", "< 5.0"
+  spec.add_dependency "gpgme", "~> 2.0"
 end
