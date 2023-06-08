@@ -1,0 +1,92 @@
+### Jekyll ###
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+### Ruby ###
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+
+# Documentation and generated files
+/.yardoc/
+/_yardoc/
+/doc/
+/rdoc/
+
+# Bundler
+/.bundle/
+/vendor/bundle
+/lib/bundler/man/
+
+# Gems and libraries
+Gemfile.lock
+.ruby-version
+.ruby-gemset
+
+# RVM
+.rvmrc
+
+
+### Emacs ###
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# Flymake
+*_flymake.*
+
+# EShell
+/eshell/history
+/eshell/lastdir
+
+# Flycheck
+flycheck_*.el
+
+# Server auth directory
+/server/
+
+# Projectile
+.projectile
+
+# Per-directory configuration
+.dir-locals.el
+
+
+### Vim ###
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+
+# Auto-generated tag files
+tags
+
+# Persistent undo
+[._]*.un~
