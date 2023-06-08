@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "keyfile"
-require_relative "policyfile"
 require "jekyll"
 require "gpgme"
 require "set"
