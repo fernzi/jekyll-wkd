@@ -22,7 +22,7 @@ module JekyllWKD
       pgp_home = Dir.mktmpdir "jekyll-wkd-"
       GPGME::Engine.home_dir = pgp_home
       Jekyll::Hooks.register :site, :post_write do
-        FileUtils.remove_dir pgp_home
+        FileUtils.remove_dir pgp_home if File.directory? pgp_home
       end
 
       domains = Set.new
