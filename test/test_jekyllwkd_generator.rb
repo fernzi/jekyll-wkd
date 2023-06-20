@@ -32,4 +32,30 @@ module JekyllWKD
       end
     end
   end
+
+  class TestGeneratorDirect < Minitest::Test
+    def setup
+      @site = fixture_site "site", {
+        "wkd" => {"mode" => "direct"}
+      }
+      @site.process
+    end
+
+    def teardown
+      FileUtils.remove_dir @site.dest
+    end
+
+    def test_generating_a_policy
+      pol = @site.in_dest_dir PGP_PATH, "policy"
+      assert File.exist? pol
+    end
+
+    def test_exporting_keys
+      require "digest"
+      TEST_KEYS.each do |k|
+        key = @site.in_dest_dir PGP_PATH, "hu", k
+        assert File.exist? key
+      end
+    end
+  end
 end
