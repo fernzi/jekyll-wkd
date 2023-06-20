@@ -16,10 +16,12 @@ without relying on the traditional public key servers, like SKS,
 which have proven increasingly unreliable and prone to abuse
 and impersonation.
 
-Given a set of public keys, this plugin generates a directory with the
-["advanced" format](https://lab.uberspace.de/guide_wkd/#advanced-method),
-suitable for hosting under an `openpgpkey` subdomain,
-e.g. `https://openpgpkey.example.com`.
+Given a set of public keys, this plugin can generate either an
+["advanced" format](https://lab.uberspace.de/guide_wkd/#advanced-method)
+directory, suitable for hosting under an `openpgpkey` subdomain
+e.g. `https://openpgpkey.example.com`; or a
+["direct" format](https://lab.uberspace.de/guide_wkd/#direct-method)
+directory, for hosting under a root or apex domain.
 
 ## Installation
 
@@ -54,6 +56,13 @@ directory within your site's source, and the plugin will
 export them into the `.well-known/openpgpkey` directory
 on the generated site.
 
+By default, the exported key directory will be in the advanced format,
+with keys being placed on a folder corresponding to their domain,
+each with their own separate policy file.
+To use the direct format, meant to be served from the root of a domain,
+you'll need to change the `mode` option in your `_config.yml` file
+to `direct`, as shown further below.
+
 The keys will still be regarded as static files by Jekyll,
 so they'll also be copied over to the generated side under
 the same directory they're in.
@@ -65,8 +74,9 @@ The default settings are:
 
 ``` yaml
 wkd:
-  path: 'keys'
+  mode: 'advanced'
   exts: ['.asc', '.pub']
+  path: 'keys'
 ```
 
 Also note that if you change your site's `baseurl`,
