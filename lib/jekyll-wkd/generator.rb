@@ -12,8 +12,9 @@ module JekyllWKD
 
     CONF_KEY = "wkd"
     CONF_DEFAULT = {
-      "path" => "keys",
-      "exts" => %w[.asc .pub]
+      "exts" => %w[.asc .pub],
+      "mode" => "advanced",
+      "path" => "keys"
     }
 
     def generate site
@@ -35,12 +36,17 @@ module JekyllWKD
               @site.source,
               File.dirname(file.relative_path),
               File.basename(file.relative_path),
-              key.fingerprint
+              key.fingerprint,
+              advanced?
             )
             domains << kf.domain
             @site.static_files << kf
           end
         end
+      end
+
+      if !advanced? && domains.size > 1
+        Jekyll.logger.warn "Cannot export multiple domains in direct mode"
       end
 
       domains.each do |domain|
@@ -54,6 +60,10 @@ module JekyllWKD
       @config ||= CONF_DEFAULT.merge @site.config.fetch(CONF_KEY, {})
     end
 
+    def advanced?
+      config["mode"] == "advanced"
+    end
+
     def in_path? file
       File.exist? @site.in_source_dir(config["path"], file.name)
     end
@@ -65,7 +75,7 @@ module JekyllWKD
     end
 
     def make_policy domain
-      path = File.join(PGP_PATH, domain, "policy")
+      path = File.join(PGP_PATH, advanced? ? domain : "", "policy")
       PolicyFile.new(@site, __dir__, "", path).tap do |page|
         page.content = "# Policy flags for domain `#{domain}`\n"
         page.data.merge!(

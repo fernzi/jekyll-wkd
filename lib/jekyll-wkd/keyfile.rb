@@ -5,15 +5,18 @@ require "digest"
 
 module JekyllWKD
   class KeyFile < ::Jekyll::StaticFile
-    def initialize site, base, dir, name, fpr
-      @fpr = fpr
+    attr_reader :advanced, :fingerprint
+
+    def initialize site, base, dir, name, fpr, adv = true
+      @fingerprint = fpr
+      @advanced = adv
       super site, base, dir, name
     end
 
     def destination dest
       @destination ||= {}
       @destination[dest] ||= @site.in_dest_dir(
-        dest, PGP_PATH, domain, "hu", hash
+        dest, PGP_PATH, advanced ? domain : "", "hu", hash
       )
     end
 
@@ -45,7 +48,7 @@ module JekyllWKD
     private
 
     def pgpkey
-      @pgpkey ||= GPGME::Key.get(@fpr)
+      @pgpkey ||= GPGME::Key.get(fingerprint)
     end
   end
 end
